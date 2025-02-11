@@ -1,4 +1,4 @@
-# Eventoria - Event Planning Platform
+# [Eventoria - Event Planning Platform](https://mtaha-23.github.io/Eventoria/)
 
 ## 📌 Project Overview
 **Eventoria** is a modern **wedding event planning** platform where users can:
