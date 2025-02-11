@@ -1,71 +1,101 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f8f9fa;
+    background-color: #eb7a11;
     color: #333;
 }
+
 
 .container {
     width: 80%;
     margin: auto;
     text-align: center;
-}
+}  
+
 
 /* Header */
 header {
     background-color: #2c3e50;
     color: white;
-    padding: 15px 0;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
-    margin: 0;
+    margin-left: 20px;
+    font-size: 28px;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
 nav ul li {
     display: inline;
-    margin: 0 15px;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #e74c3c;
 }
 
 /* Hero Section */
 .hero {
     background: url('https://source.unsplash.com/1600x900/?wedding') no-repeat center center/cover;
     color: white;
-    padding: 100px 0;
+    padding: 120px 0;
+    text-align: center;
 }
 
 .hero h2 {
-    font-size: 36px;
+    font-size: 42px;
 }
 
-.btn {
+.btn-primary {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: #e74c3c;
     color: white;
     text-decoration: none;
-    margin-top: 15px;
+    margin-top: 20px;
     border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #c0392b;
+}
+
+/* About Section */
+.about {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.about p {
+    font-size: 18px;
+    width: 70%;
+    margin: auto;
 }
 
 /* Services */
 .services {
-    padding: 50px 0;
-    background-color: white;
+    padding: 60px 0;
+    background-color: #f8f9fa;
 }
 
 .service-list {
@@ -78,8 +108,15 @@ nav ul li a {
     background: #ecf0f1;
     padding: 20px;
     border-radius: 8px;
-    width: 22%;
-    margin: 10px;
+    width: 18%;
+    margin: 15px;
+    text-align: center;
+}
+
+.service i {
+    font-size: 40px;
+    color: #e74c3c;
+    margin-bottom: 10px;
 }
 
 /* Contact */
@@ -87,6 +124,20 @@ nav ul li a {
     background: #2c3e50;
     color: white;
     padding: 50px 0;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 25px;
+    background: white;
+    color: #e74c3c;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #f4f4f4;
 }
 
 /* Footer */
