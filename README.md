@@ -1,4 +1,4 @@
-# Eventoria - Wedding Event Planning Platform
+# Eventoria - Event Planning Platform
 
 ## 📌 Project Overview
 **Eventoria** is a modern **wedding event planning** platform where users can:
@@ -7,8 +7,7 @@
 - Vendors can **list their services**, manage bookings, and set dynamic pricing.
 - Users can leave **reviews & ratings** for services.
 
-This project is developed as part of the **Web Programming Course (Spring 2025).**
-
+In phase 2 more events plannig option will be added, i.e birthdays, anniversaries, parties etc.
 ---
 
 ## 🚀 Features
@@ -29,6 +28,3 @@ This project is developed as part of the **Web Programming Course (Spring 2025).
 - **Database:** MySQL  
 - **Version Control:** Git & GitHub  
 
----
-
-## 📂 Folder Structure
