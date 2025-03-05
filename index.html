@@ -3,80 +3,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventoria - Plan Your Perfect Wedding</title>
+    <title>Eventoria - Your Event Planning Solution</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Header Section -->
     <header>
         <div class="container">
-            <h1>Eventoria</h1>
+            <div class="logo">
+                <h1>Eventoria</h1>
+            </div>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#venues">Venues</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </header>
-    
-    <section class="hero">
-        <div class="container">
-            <h2>Plan Your Dream Wedding with Ease</h2>
-            <p>Find the best venues, caterers, decorators, and photographers all in one place.</p>
-            <a href="#contact" class="btn-primary">Get Started</a>
-        </div>
-    </section>
 
-    <section id="about" class="about">
+    <!-- Hero Section -->
+    <section id="hero">
         <div class="container">
-            <h2>About Eventoria</h2>
-            <p>Eventoria is a premium wedding event planning platform designed to make your special day stress-free. We offer a seamless experience to book the finest venues, hire top-rated professionals, and manage your wedding effortlessly.</p>
-            <p>Our mission is to provide a hassle-free, luxurious, and personalized wedding planning experience. With a curated list of vendors and real-time booking availability, Eventoria ensures every detail is handled with perfection.</p>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <div class="service-list">
-                <div class="service">
-                    <i class="fas fa-landmark"></i>
-                    <h3>Banquet Halls</h3>
-                    <p>Discover and book the best wedding venues.</p>
-                </div>
-                <div class="service">
-                    <i class="fas fa-utensils"></i>
-                    <h3>Catering</h3>
-                    <p>Top-class catering services for your big day.</p>
-                </div>
-                <div class="service">
-                    <i class="fas fa-gem"></i>
-                    <h3>Decoration</h3>
-                    <p>Beautiful wedding decorations to make your event special.</p>
-                </div>
-                <div class="service">
-                    <i class="fas fa-camera"></i>
-                    <h3>Photography</h3>
-                    <p>Capture memories with professional wedding photographers.</p>
+            <div class="hero-content">
+                <h1>Plan Your Perfect Event</h1>
+                <p>Find the best venues, services, and vendors all in one place</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Find Venues</a>
+                    <a href="#" class="btn btn-secondary">List Your Venue</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <!-- Search Section -->
+    <section id="search">
         <div class="container">
-            <h2>Get in Touch</h2>
-            <p>Have questions? Contact us now!</p>
-            <a href="mailto:info@eventoria.com" class="btn-secondary">Email Us</a>
+            <div class="search-box">
+                <h2>Find Your Perfect Venue</h2>
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="event-type">Event Type</label>
+                        <select id="event-type">
+                            <option value="">Select Event Type</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="birthday">Birthday Party</option>
+                            <option value="conference">Conference</option>
+                            <option value="dinner">Dinner Party</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="Enter city or area">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Guests</label>
+                        <input type="number" id="guests" placeholder="Number of guests">
+                    </div>
+                    <button class="btn btn-primary search-btn">Search Venues</button>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer>
+    <!-- Featured Venues Section -->
+    <section id="featured-venues">
         <div class="container">
-            <p>&copy; 2025 Eventoria. All rights reserved.</p>
+            <div class="section-header">
+                <h2>Featured Venues</h2>
+                <p>Discover our most popular event spaces</p>
+            </div>
+            <div class="venues-grid">
+                <div class="venue-card">
+                    <div class="venue-image">
+                        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Luxury Wedding Hall">
+                        <div class="venue-badge">Popular</div>
+                    </div>
+                    <div class="venue-details">
+                        <h3>Crystal Palace</h3>
+                        <div class="venue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Downtown</span>
+                            <span><i class="fas fa-user-friends"></i> Up to 500</span>
+                        </div>
+                        <div class="venue-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(128 reviews)</span>
+                        </div>
+                        <p>Elegant wedding hall with panoramic city views and luxurious amenities.</p>
+                        <div class="venue-price">
+                            <span>From $2,500</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-image">
+                        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Conference Center">
+                    </div>
+                    <div class="venue-details">
+                        <h3>Business Hub</h3>
+                        <div class="venue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Business District</span>
+                            <span><i class="fas fa-user-friends"></i> Up to 200</span>
+                        </div>
+                        <div class="venue-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(86 reviews)</span>
+                        </div>
+                        <p>Modern conference center with state-of-the-art technology and meeting rooms.</p>
+                        <div class="venue-price">
+                            <span>From $1,200</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-image">
+                        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Garden Party Venue">
+                        <div class="venue-badge">New</div>
+                    </div>
+                    <div class="venue-details">
+                        <h3>Garden Oasis</h3>
+                        <div class="venue-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Suburban</span>
+                            <span><i class="fas fa-user-friends"></i> Up to 150</span>
+                        </div>
+                        <div class="venue-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(42 reviews)</span>
+                        </div>
+                        <p>Beautiful garden venue perfect for outdoor celebrations and parties.</p>
+                        <div class="venue-price">
+                            <span>From $1,800</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all-container">
+                <a href="#" class="btn btn-outline">View All Venues</a>
+            </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Add-On Services</h2>
+                <p>Enhance your event with our premium services</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Catering</h3>
+                    <p>Choose from a variety of menu options from top-rated caterers.</p>
+                    <a href="#" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Photography</h3>
+                    <p>Capture your special moments with professional photographers.</p>
+                    <a href="#" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>Entertainment</h3>
+                    <p>Book DJs, bands, and performers to entertain your guests.</p>
+                    <a href="#" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3>Decoration</h3>
+                    <p>Transform your venue with beautiful decorations and themes.</p>
+                    <a href="#" class="btn btn-text">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Planning your event is easy with Eventoria</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Find a Venue</h3>
+                    <p>Search and filter venues based on your requirements and preferences.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Book Your Date</h3>
+                    <p>Check availability and reserve your preferred date and time slot.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3>Add Services</h3>
+                    <p>Customize your event with additional services and add-ons.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3>Enjoy Your Event</h3>
+                    <p>Relax and enjoy your perfectly planned event with your guests.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Read reviews from people who have used Eventoria</p>
+            </div>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Eventoria made planning our wedding so easy! We found the perfect venue and all the services we needed in one place. Highly recommended!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sarah Johnson">
+                        <div>
+                            <h4>Sarah Johnson</h4>
+                            <p>Wedding, Crystal Palace</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"As a business owner, I needed a reliable venue for our annual conference. Eventoria helped us find the perfect space with all the technology we needed."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+                        <div>
+                            <h4>Michael Chen</h4>
+                            <p>Conference, Business Hub</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"I planned my daughter's sweet sixteen through Eventoria and it was a huge success! The venue was beautiful and the catering was excellent."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Lisa Rodriguez">
+                        <div>
+                            <h4>Lisa Rodriguez</h4>
+                            <p>Birthday Party, Garden Oasis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Owner Section -->
+    <section id="venue-owner">
+        <div class="container">
+            <div class="venue-owner-content">
+                <div class="venue-owner-text">
+                    <h2>Own a Venue?</h2>
+                    <p>List your venue on Eventoria and reach thousands of potential customers looking for spaces like yours.</p>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> Increase your bookings and revenue</li>
+                        <li><i class="fas fa-check-circle"></i> Manage your calendar and availability</li>
+                        <li><i class="fas fa-check-circle"></i> Receive reviews and build your reputation</li>
+                        <li><i class="fas fa-check-circle"></i> Connect with service providers</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Register Your Venue</a>
+                </div>
+                <div class="venue-owner-image">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Venue Owner">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Plan Your Next Event?</h2>
+                <p>Join thousands of satisfied customers who have planned successful events with Eventoria.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">Sign Up Now</a>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer>
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column footer-brand">
+                    <div class="footer-logo">
+                        <h2>Eventoria</h2>
+                    </div>
+                    <p>Your one-stop solution for event planning and venue booking. We connect you with the perfect venues and services for your special occasions.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Venues</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Event Types</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Weddings</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Birthday Parties</a></li>
+                        <li><a href="#">Conferences</a></li>
+                        <li><a href="#">Dinner Parties</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Event Street, City, Country</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@eventoria.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <div class="newsletter-content">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p>Get the latest updates on new venues, special offers, and event planning tips.</p>
+                </div>
+                <div class="newsletter-form-container">
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom-content">
+                <p>&copy; 2023 Eventoria. All rights reserved.</p>
+                <div class="footer-legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
