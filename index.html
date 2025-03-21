@@ -8,6 +8,141 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Auth Modals -->
+    <div id="signin-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-container">
+                <div class="auth-logo">
+                    <h1>Eventoria</h1>
+                </div>
+                <div class="auth-title">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to continue to your account</p>
+                </div>
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="signin-email">Email Address</label>
+                        <input type="email" id="signin-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input type="password" id="signin-password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password" onclick="openForgotPasswordModal()">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+                <div class="social-divider">
+                    <span>Or sign in with</span>
+                </div>
+                <div class="social-login">
+                    <a href="#" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" onclick="openSignUpModal()">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-container">
+                <div class="auth-logo">
+                    <h1>Eventoria</h1>
+                </div>
+                <div class="auth-title">
+                    <h2>Create Account</h2>
+                    <p>Sign up to get started with Eventoria</p>
+                </div>
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+                <div class="social-divider">
+                    <span>Or sign up with</span>
+                </div>
+                <div class="social-login">
+                    <a href="#" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-btn twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" onclick="openSignInModal()">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="forgot-password-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-container">
+                <div class="auth-logo">
+                    <h1>Eventoria</h1>
+                </div>
+                <div class="auth-title">
+                    <h2>Forgot Password</h2>
+                    <p>Enter your email to reset your password</p>
+                </div>
+                <div id="success-message" class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Password reset link has been sent to your email address.</p>
+                </div>
+                <form id="reset-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="reset-email">Email Address</label>
+                        <input type="email" id="reset-email" placeholder="Enter your email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Reset Password</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Remember your password? <a href="#" onclick="openSignInModal()">Back to Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <header>
         <div class="container">
@@ -24,8 +159,8 @@
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <a href="#" class="btn btn-outline">Login</a>
-                <a href="#" class="btn btn-primary">Sign Up</a>
+                <a href="#" class="btn btn-outline" onclick="openSignInModal()">Login</a>
+                <a href="#" class="btn btn-primary" onclick="openSignUpModal()">Sign Up</a>
             </div>
             <div class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -353,7 +488,7 @@
                 <h2>Ready to Plan Your Next Event?</h2>
                 <p>Join thousands of satisfied customers who have planned successful events with Eventoria.</p>
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary">Sign Up Now</a>
+                    <a href="#" class="btn btn-primary" onclick="openSignUpModal()">Sign Up Now</a>
                     <a href="#" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
@@ -361,92 +496,147 @@
     </section>
 
     <!-- Footer -->
-<footer>
-    <div class="footer-top">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column footer-brand">
-                    <div class="footer-logo">
-                        <h2>Eventoria</h2>
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-column footer-brand">
+                        <div class="footer-logo">
+                            <h2>Eventoria</h2>
+                        </div>
+                        <p>Your one-stop solution for event planning and venue booking. We connect you with the perfect venues and services for your special occasions.</p>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
-                    <p>Your one-stop solution for event planning and venue booking. We connect you with the perfect venues and services for your special occasions.</p>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Venues</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Event Types</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Weddings</a></li>
+                            <li><a href="#">Corporate Events</a></li>
+                            <li><a href="#">Birthday Parties</a></li>
+                            <li><a href="#">Conferences</a></li>
+                            <li><a href="#">Dinner Parties</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>loonay wala mor, Chiniot</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+92 (42) 128-128</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span><a href="mailto:info@eventoria.com">info@eventoria.com</a></span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Venues</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Event Types</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Weddings</a></li>
-                        <li><a href="#">Corporate Events</a></li>
-                        <li><a href="#">Birthday Parties</a></li>
-                        <li><a href="#">Conferences</a></li>
-                        <li><a href="#">Dinner Parties</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column footer-contact">
-                    <h3>Contact Us</h3>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>loonay wala mor, Chiniot</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+92 (42) 128-128</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>info@eventoria.com</span>
-                        </li>
-                    </ul>
+            </div>
+        </div>
+        
+        <div class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-container">
+                    <div class="newsletter-content">
+                        <h3>Subscribe to Our Newsletter</h3>
+                        <p>Get the latest updates on new venues, special offers, and event planning tips.</p>
+                    </div>
+                    <div class="newsletter-form-container">
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-container">
-                <div class="newsletter-content">
-                    <h3>Subscribe to Our Newsletter</h3>
-                    <p>Get the latest updates on new venues, special offers, and event planning tips.</p>
-                </div>
-                <div class="newsletter-form-container">
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2023 Eventoria. All rights reserved.</p>
+                    <div class="footer-legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="footer-bottom-content">
-                <p>&copy; 2023 Eventoria. All rights reserved.</p>
-                <div class="footer-legal-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
+
+    <script>
+        // Modal functionality
+        const signinModal = document.getElementById('signin-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const forgotPasswordModal = document.getElementById('forgot-password-modal');
+        const closeButtons = document.getElementsByClassName('close-modal');
+
+        function openSignInModal() {
+            signinModal.style.display = 'flex';
+            signupModal.style.display = 'none';
+            forgotPasswordModal.style.display = 'none';
+        }
+
+        function openSignUpModal() {
+            signupModal.style.display = 'flex';
+            signinModal.style.display = 'none';
+            forgotPasswordModal.style.display = 'none';
+        }
+
+        function openForgotPasswordModal() {
+            forgotPasswordModal.style.display = 'flex';
+            signinModal.style.display = 'none';
+            signupModal.style.display = 'none';
+        }
+
+        // Close modals when clicking the X
+        for (let i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener('click', function() {
+                signinModal.style.display = 'none';
+                signupModal.style.display = 'none';
+                forgotPasswordModal.style.display = 'none';
+            });
+        }
+
+        // Close modals when clicking outside the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target == signinModal) {
+                signinModal.style.display = 'none';
+            }
+            if (event.target == signupModal) {
+                signupModal.style.display = 'none';
+            }
+            if (event.target == forgotPasswordModal) {
+                forgotPasswordModal.style.display = 'none';
+            }
+        });
+
+        // Forgot password form submission
+        document.getElementById('reset-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('reset-form').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
