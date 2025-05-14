@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Eventoria</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/" class="logo">Eventoria</a>
+        </div>
+        <div class="navbar-menu">
+            <% if (locals.user) { %>
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown">
+                        <a class="navbar-link">
+                            <i class="fas fa-user"></i>
+                            <%= user.name %>
+                        </a>
+                        <div class="navbar-dropdown">
+                            <% if (user.role === 'owner') { %>
+                                <a href="/owner/dashboard" class="navbar-item">Dashboard</a>
+                                <a href="/owner/venues" class="navbar-item">My Venues</a>
+                                <a href="/owner/bookings" class="navbar-item">Bookings</a>
+                                <a href="/owner/analytics" class="navbar-item">Analytics</a>
+                            <% } else { %>
+                                <a href="/dashboard" class="navbar-item">Dashboard</a>
+                                <a href="/bookings" class="navbar-item">My Bookings</a>
+                            <% } %>
+                            <a href="/settings" class="navbar-item">Settings</a>
+                            <hr class="navbar-divider">
+                            <a href="/auth/logout" class="navbar-item">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="navbar-end">
+                    <a href="/login" class="navbar-item">Login</a>
+                    <a href="/register" class="navbar-item">Register</a>
+                </div>
+            <% } %>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <%- body %>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Eventoria</h3>
+                    <p>Your one-stop solution for venue booking and event management.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> Eventoria. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <%- script %>
+</body>
+</html> 

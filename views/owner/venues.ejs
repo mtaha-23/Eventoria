@@ -1,0 +1,356 @@
+<%- include('../layouts/main', { title: 'Venue Management' }) %>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Venue Management</h1>
+        <a href="/owner/venues/new" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Venue
+        </a>
+    </div>
+
+    <!-- Venue Filters -->
+    <div class="card mb-4">
+        <div class="filter-section">
+            <div class="search-box">
+                <input type="text" id="searchVenue" class="form-control" placeholder="Search venues...">
+            </div>
+            <div class="filter-options">
+                <select id="statusFilter" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <select id="sortBy" class="form-control">
+                    <option value="name">Sort by Name</option>
+                    <option value="bookings">Sort by Bookings</option>
+                    <option value="revenue">Sort by Revenue</option>
+                    <option value="rating">Sort by Rating</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Venues Grid -->
+    <div class="venues-grid">
+        <% venues.forEach(venue => { %>
+            <div class="venue-card">
+                <div class="venue-image">
+                    <img src="<%= venue.images[0] || '/images/default-venue.jpg' %>" alt="<%= venue.name %>">
+                    <div class="venue-status <%= venue.status %>">
+                        <%= venue.status.charAt(0).toUpperCase() + venue.status.slice(1) %>
+                    </div>
+                </div>
+                <div class="venue-content">
+                    <h3 class="venue-name"><%= venue.name %></h3>
+                    <p class="venue-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <%= venue.location %>
+                    </p>
+                    <div class="venue-stats">
+                        <div class="stat">
+                            <i class="fas fa-calendar-check"></i>
+                            <span><%= venue.totalBookings %> bookings</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>$<%= venue.revenue.toLocaleString() %></span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-star"></i>
+                            <span><%= venue.rating.toFixed(1) %></span>
+                        </div>
+                    </div>
+                    <div class="venue-actions">
+                        <a href="/owner/venues/<%= venue._id %>/edit" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <button class="btn btn-sm btn-danger" onclick="deleteVenue('<%= venue._id %>')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        <button class="btn btn-sm <%= venue.status === 'active' ? 'btn-warning' : 'btn-success' %>" 
+                                onclick="toggleStatus('<%= venue._id %>', '<%= venue.status %>')">
+                            <i class="fas fa-<%= venue.status === 'active' ? 'pause' : 'play' %>"></i>
+                            <%= venue.status === 'active' ? 'Deactivate' : 'Activate' %>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+        <div class="pagination">
+            <% if (hasPrevPage) { %>
+                <a href="?page=<%= currentPage - 1 %>" class="btn btn-secondary">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </a>
+            <% } %>
+            
+            <span class="page-info">
+                Page <%= currentPage %> of <%= totalPages %>
+            </span>
+
+            <% if (hasNextPage) { %>
+                <a href="?page=<%= currentPage + 1 %>" class="btn btn-secondary">
+                    Next <i class="fas fa-chevron-right"></i>
+                </a>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .filter-section {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .search-box {
+        flex: 1;
+    }
+
+    .filter-options {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .venues-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .venue-card {
+        background: white;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s;
+    }
+
+    .venue-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .venue-image {
+        position: relative;
+        height: 200px;
+    }
+
+    .venue-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .venue-status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .venue-status.active {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+
+    .venue-status.inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .venue-content {
+        padding: 1.5rem;
+    }
+
+    .venue-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .venue-location {
+        color: var(--text-light);
+        margin-bottom: 1rem;
+    }
+
+    .venue-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .stat i {
+        color: var(--primary-color);
+    }
+
+    .stat span {
+        font-size: 0.875rem;
+        color: var(--text-light);
+    }
+
+    .venue-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .page-info {
+        color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+        .filter-section {
+            flex-direction: column;
+        }
+
+        .filter-options {
+            width: 100%;
+        }
+
+        .venues-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    // Search functionality
+    document.getElementById('searchVenue').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const venueCards = document.querySelectorAll('.venue-card');
+
+        venueCards.forEach(card => {
+            const venueName = card.querySelector('.venue-name').textContent.toLowerCase();
+            const venueLocation = card.querySelector('.venue-location').textContent.toLowerCase();
+            
+            if (venueName.includes(searchTerm) || venueLocation.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    // Status filter
+    document.getElementById('statusFilter').addEventListener('change', function(e) {
+        const status = e.target.value.toLowerCase();
+        const venueCards = document.querySelectorAll('.venue-card');
+
+        venueCards.forEach(card => {
+            const venueStatus = card.querySelector('.venue-status').textContent.toLowerCase();
+            
+            if (!status || venueStatus === status) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+
+    // Sort functionality
+    document.getElementById('sortBy').addEventListener('change', function(e) {
+        const sortBy = e.target.value;
+        const venuesGrid = document.querySelector('.venues-grid');
+        const venueCards = Array.from(document.querySelectorAll('.venue-card'));
+
+        venueCards.sort((a, b) => {
+            switch(sortBy) {
+                case 'name':
+                    return a.querySelector('.venue-name').textContent.localeCompare(
+                        b.querySelector('.venue-name').textContent
+                    );
+                case 'bookings':
+                    return parseInt(b.querySelector('.stat:nth-child(1) span').textContent) -
+                           parseInt(a.querySelector('.stat:nth-child(1) span').textContent);
+                case 'revenue':
+                    return parseFloat(b.querySelector('.stat:nth-child(2) span').textContent.replace(/[^0-9.-]+/g, '')) -
+                           parseFloat(a.querySelector('.stat:nth-child(2) span').textContent.replace(/[^0-9.-]+/g, ''));
+                case 'rating':
+                    return parseFloat(b.querySelector('.stat:nth-child(3) span').textContent) -
+                           parseFloat(a.querySelector('.stat:nth-child(3) span').textContent);
+                default:
+                    return 0;
+            }
+        });
+
+        venueCards.forEach(card => venuesGrid.appendChild(card));
+    });
+
+    // Delete venue
+    async function deleteVenue(id) {
+        if (confirm('Are you sure you want to delete this venue?')) {
+            try {
+                const response = await fetch(`/api/owner/venues/${id}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Error deleting venue');
+                }
+            } catch (error) {
+                console.error('Error deleting venue:', error);
+                alert('Error deleting venue');
+            }
+        }
+    }
+
+    // Toggle venue status
+    async function toggleStatus(id, currentStatus) {
+        const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+        
+        try {
+            const response = await fetch(`/api/owner/venues/${id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.message || 'Error updating venue status');
+            }
+        } catch (error) {
+            console.error('Error updating venue status:', error);
+            alert('Error updating venue status');
+        }
+    }
+</script> 

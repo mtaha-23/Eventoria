@@ -1,0 +1,194 @@
+<div class="venue-details-page">
+    <div class="container">
+        <div class="venue-header">
+            <h1><%= venue.name %></h1>
+            <div class="venue-meta">
+                <p class="venue-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <%= venue.location %>
+                </p>
+                <div class="venue-rating">
+                    <div class="stars">
+                        <% for(let i = 1; i <= 5; i++) { %>
+                            <i class="fas fa-star <%= i <= venue.rating ? 'active' : '' %>"></i>
+                        <% } %>
+                    </div>
+                    <span class="reviews">(<%= venue.reviews %> reviews)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="venue-content">
+            <div class="venue-main">
+                <div class="image-gallery">
+                    <div class="main-image">
+                        <img src="<%= venue.images[0] %>" alt="<%= venue.name %>" id="mainImage">
+                    </div>
+                    <div class="thumbnail-grid">
+                        <% venue.images.forEach((image, index) => { %>
+                            <img src="<%= image %>" alt="<%= venue.name %> - Image <%= index + 1 %>" class="<%= index === 0 ? 'active' : '' %>">
+                        <% }); %>
+                    </div>
+                </div>
+
+                <div class="venue-info-section">
+                    <h2>About This Venue</h2>
+                    <p><%= venue.description %></p>
+
+                    <div class="venue-features">
+                        <h3>Features & Amenities</h3>
+                        <div class="features-grid">
+                            <% venue.amenities.forEach(amenity => { %>
+                                <div class="feature-item">
+                                    <i class="fas fa-check"></i>
+                                    <span><%= amenity %></span>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+
+                    <div class="venue-capacity">
+                        <h3>Capacity</h3>
+                        <div class="capacity-grid">
+                            <div class="capacity-item">
+                                <span class="capacity-number"><%= venue.capacity %></span>
+                                <span class="capacity-label">Maximum Capacity</span>
+                            </div>
+                            <div class="capacity-item">
+                                <span class="capacity-number"><%= venue.minCapacity %></span>
+                                <span class="capacity-label">Minimum Capacity</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="venue-location-details">
+                        <h3>Location</h3>
+                        <div id="venueMap" class="venue-map"></div>
+                        <p class="location-address"><%= venue.address %></p>
+                    </div>
+
+                    <div class="venue-reviews">
+                        <h3>Reviews</h3>
+                        <% if (venue.reviewList && venue.reviewList.length > 0) { %>
+                            <div class="reviews-list">
+                                <% venue.reviewList.forEach(review => { %>
+                                    <div class="review-card">
+                                        <div class="review-header">
+                                            <div class="reviewer-info">
+                                                <img src="<%= review.user.avatar || '/images/default-avatar.png' %>" alt="<%= review.user.name %>" class="reviewer-avatar">
+                                                <div>
+                                                    <h4><%= review.user.name %></h4>
+                                                    <div class="review-rating">
+                                                        <% for(let i = 1; i <= 5; i++) { %>
+                                                            <i class="fas fa-star <%= i <= review.rating ? 'active' : '' %>"></i>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="review-date"><%= new Date(review.date).toLocaleDateString() %></span>
+                                        </div>
+                                        <p class="review-content"><%= review.content %></p>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } else { %>
+                            <p class="no-reviews">No reviews yet. Be the first to review this venue!</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="venue-sidebar">
+                <div class="booking-card">
+                    <div class="price-section">
+                        <span class="price">$<%= venue.price %></span>
+                        <span class="per">per day</span>
+                    </div>
+
+                    <form action="/bookings/create" method="POST" class="booking-form" id="bookingForm">
+                        <input type="hidden" name="venueId" value="<%= venue._id %>">
+                        
+                        <div class="form-group">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" id="date" name="date" class="form-control" required min="<%= new Date().toISOString().split('T')[0] %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests" class="form-label">Number of Guests</label>
+                            <input type="number" id="guests" name="guests" class="form-control" required min="<%= venue.minCapacity %>" max="<%= venue.capacity %>">
+                            <small class="form-text">Min: <%= venue.minCapacity %>, Max: <%= venue.capacity %></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="duration" class="form-label">Duration (days)</label>
+                            <input type="number" id="duration" name="duration" class="form-control" required min="1" value="1">
+                        </div>
+
+                        <div class="price-breakdown">
+                            <div class="price-item">
+                                <span>Price per day</span>
+                                <span>$<%= venue.price %></span>
+                            </div>
+                            <div class="price-item">
+                                <span>Duration</span>
+                                <span id="durationDisplay">1 day</span>
+                            </div>
+                            <div class="price-item total">
+                                <span>Total</span>
+                                <span id="totalPrice">$<%= venue.price %></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Book Now</button>
+                    </form>
+
+                    <div class="venue-owner">
+                        <h3>Venue Owner</h3>
+                        <div class="owner-info">
+                            <img src="<%= venue.owner.avatar || '/images/default-avatar.png' %>" alt="<%= venue.owner.name %>" class="owner-avatar">
+                            <div>
+                                <h4><%= venue.owner.name %></h4>
+                                <p class="owner-rating">
+                                    <i class="fas fa-star"></i>
+                                    <%= venue.owner.rating %> (<%= venue.owner.reviews %> reviews)
+                                </p>
+                            </div>
+                        </div>
+                        <a href="/messages/<%= venue.owner._id %>" class="btn btn-secondary btn-block">Contact Owner</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAPS_API_KEY %>&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        const venue = {
+            lat: <%= venue.location.coordinates[1] %>,
+            lng: <%= venue.location.coordinates[0] %>
+        };
+        
+        const map = new google.maps.Map(document.getElementById('venueMap'), {
+            zoom: 15,
+            center: venue
+        });
+        
+        new google.maps.Marker({
+            position: venue,
+            map: map,
+            title: '<%= venue.name %>'
+        });
+    }
+
+    // Update total price when duration changes
+    document.getElementById('duration').addEventListener('change', function() {
+        const duration = parseInt(this.value);
+        const pricePerDay = <%= venue.price %>;
+        const total = duration * pricePerDay;
+        
+        document.getElementById('durationDisplay').textContent = duration + ' day' + (duration > 1 ? 's' : '');
+        document.getElementById('totalPrice').textContent = '$' + total;
+    });
+</script> 

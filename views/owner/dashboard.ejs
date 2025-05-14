@@ -1,0 +1,455 @@
+<%- include('../layouts/main', { title: 'Owner Dashboard' }) %>
+
+<div class="container">
+    <div class="dashboard-header">
+        <h1>Welcome back, <%= user.name %></h1>
+        <div class="date-filter">
+            <select id="period" class="form-control">
+                <option value="week">Last 7 days</option>
+                <option value="month" selected>Last 30 days</option>
+                <option value="year">Last 12 months</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-4">
+        <div class="card">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Bookings</h3>
+                    <p class="stat-value"><%= stats.totalBookings %></p>
+                    <p class="stat-change <%= stats.bookingChange >= 0 ? 'positive' : 'negative' %>">
+                        <%= stats.bookingChange %>% from last period
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Revenue</h3>
+                    <p class="stat-value">$<%= stats.revenue.toLocaleString() %></p>
+                    <p class="stat-change <%= stats.revenueChange >= 0 ? 'positive' : 'negative' %>">
+                        <%= stats.revenueChange %>% from last period
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Average Rating</h3>
+                    <p class="stat-value"><%= stats.averageRating.toFixed(1) %></p>
+                    <p class="stat-change <%= stats.ratingChange >= 0 ? 'positive' : 'negative' %>">
+                        <%= stats.ratingChange %>% from last period
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Customers</h3>
+                    <p class="stat-value"><%= stats.totalCustomers %></p>
+                    <p class="stat-change <%= stats.customerChange >= 0 ? 'positive' : 'negative' %>">
+                        <%= stats.customerChange %>% from last period
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Chart -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Revenue Overview</h2>
+        </div>
+        <div class="chart-container">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Recent Bookings</h2>
+            <a href="/owner/bookings" class="btn btn-primary">View All</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Venue</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% recentBookings.forEach(booking => { %>
+                        <tr>
+                            <td>#<%= booking._id.toString().slice(-6) %></td>
+                            <td><%= booking.venue.name %></td>
+                            <td><%= booking.customer.name %></td>
+                            <td><%= new Date(booking.date).toLocaleDateString() %></td>
+                            <td>$<%= booking.amount.toLocaleString() %></td>
+                            <td>
+                                <span class="status-badge status-<%= booking.status.toLowerCase() %>">
+                                    <%= booking.status %>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-sm btn-primary" onclick="viewBooking('<%= booking._id %>')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-success" onclick="updateStatus('<%= booking._id %>', 'confirmed')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="updateStatus('<%= booking._id %>', 'cancelled')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Quick Actions</h2>
+            </div>
+            <div class="quick-actions">
+                <a href="/owner/venues/new" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Venue
+                </a>
+                <a href="/owner/bookings/new" class="btn btn-success">
+                    <i class="fas fa-calendar-plus"></i> Create Booking
+                </a>
+                <a href="/owner/analytics" class="btn btn-info">
+                    <i class="fas fa-chart-bar"></i> View Analytics
+                </a>
+                <a href="/owner/settings" class="btn btn-secondary">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Reviews</h2>
+                <a href="/owner/reviews" class="btn btn-primary">View All</a>
+            </div>
+            <div class="reviews-list">
+                <% recentReviews.forEach(review => { %>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-rating">
+                                <% for(let i = 0; i < 5; i++) { %>
+                                    <i class="fas fa-star <%= i < review.rating ? 'active' : '' %>"></i>
+                                <% } %>
+                            </div>
+                            <span class="review-date"><%= new Date(review.date).toLocaleDateString() %></span>
+                        </div>
+                        <p class="review-content"><%= review.comment %></p>
+                        <div class="review-footer">
+                            <span class="review-venue"><%= review.venue.name %></span>
+                            <button class="btn btn-sm btn-primary" onclick="respondToReview('<%= review._id %>')">
+                                Respond
+                            </button>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .stat-content h3 {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-change {
+        font-size: 0.875rem;
+    }
+
+    .stat-change.positive {
+        color: var(--success-color);
+    }
+
+    .stat-change.negative {
+        color: var(--danger-color);
+    }
+
+    .chart-container {
+        height: 300px;
+        margin-top: 1rem;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .table th {
+        font-weight: 600;
+        color: var(--text-light);
+    }
+
+    .status-badge {
+        padding: 0.25rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-confirmed {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+
+    .status-cancelled {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .quick-actions .btn {
+        width: 100%;
+    }
+
+    .reviews-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .review-item {
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .review-rating {
+        color: #f59e0b;
+    }
+
+    .review-date {
+        color: var(--text-light);
+        font-size: 0.875rem;
+    }
+
+    .review-content {
+        margin-bottom: 0.5rem;
+    }
+
+    .review-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .review-venue {
+        color: var(--text-light);
+        font-size: 0.875rem;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Initialize Revenue Chart
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    const revenueChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: <%= JSON.stringify(revenueData.labels) %>,
+            datasets: [{
+                label: 'Revenue',
+                data: <%= JSON.stringify(revenueData.data) %>,
+                borderColor: '#4f46e5',
+                backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Period Change Handler
+    document.getElementById('period').addEventListener('change', async function(e) {
+        try {
+            const response = await fetch(`/api/owner/revenue?period=${e.target.value}`);
+            const data = await response.json();
+            
+            revenueChart.data.labels = data.labels;
+            revenueChart.data.datasets[0].data = data.data;
+            revenueChart.update();
+        } catch (error) {
+            console.error('Error fetching revenue data:', error);
+        }
+    });
+
+    // Booking Actions
+    async function viewBooking(id) {
+        try {
+            const response = await fetch(`/api/owner/bookings/${id}`);
+            const data = await response.json();
+            if (data.success) {
+                // Implement booking details modal
+                console.log(data.booking);
+            }
+        } catch (error) {
+            console.error('Error fetching booking details:', error);
+        }
+    }
+
+    async function updateStatus(id, status) {
+        try {
+            const response = await fetch(`/api/owner/bookings/${id}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status })
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error updating booking status:', error);
+        }
+    }
+
+    async function respondToReview(id) {
+        try {
+            const response = await fetch(`/api/owner/reviews/${id}/respond`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ response: 'Thank you for your feedback!' })
+            });
+            const data = await response.json();
+            if (data.success) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error responding to review:', error);
+        }
+    }
+</script> 

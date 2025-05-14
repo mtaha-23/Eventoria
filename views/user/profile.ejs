@@ -1,0 +1,146 @@
+<div class="profile-page">
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="Profile Avatar">
+                <button class="btn btn-secondary btn-sm" id="changeAvatarBtn">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1><%= user.name %></h1>
+                <p class="profile-email"><%= user.email %></p>
+                <p class="profile-join-date">Member since <%= new Date(user.createdAt).toLocaleDateString() %></p>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <nav class="profile-nav">
+                    <a href="#profile" class="active">Profile</a>
+                    <a href="#bookings">My Bookings</a>
+                    <a href="#favorites">Favorites</a>
+                    <a href="#settings">Settings</a>
+                </nav>
+            </div>
+
+            <div class="profile-main">
+                <section id="profile" class="profile-section">
+                    <h2>Profile Information</h2>
+                    <form action="/user/profile" method="POST" class="profile-form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" id="name" name="name" class="form-control" value="<%= user.name %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" value="<%= user.email %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" value="<%= user.phone || '' %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea id="bio" name="bio" class="form-control" rows="4"><%= user.bio || '' %></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </section>
+
+                <section id="bookings" class="profile-section">
+                    <h2>My Bookings</h2>
+                    <div class="bookings-list">
+                        <% if (bookings && bookings.length > 0) { %>
+                            <% bookings.forEach(booking => { %>
+                                <div class="booking-card">
+                                    <div class="booking-image">
+                                        <img src="<%= booking.venue.images[0] %>" alt="<%= booking.venue.name %>">
+                                    </div>
+                                    <div class="booking-info">
+                                        <h3><%= booking.venue.name %></h3>
+                                        <p class="booking-date">
+                                            <i class="fas fa-calendar"></i>
+                                            <%= new Date(booking.date).toLocaleDateString() %>
+                                        </p>
+                                        <p class="booking-status <%= booking.status %>">
+                                            <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                                        </p>
+                                        <a href="/bookings/<%= booking._id %>" class="btn btn-secondary">View Details</a>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="no-bookings">You haven't made any bookings yet.</p>
+                        <% } %>
+                    </div>
+                </section>
+
+                <section id="favorites" class="profile-section">
+                    <h2>Favorite Venues</h2>
+                    <div class="favorites-grid">
+                        <% if (favorites && favorites.length > 0) { %>
+                            <% favorites.forEach(venue => { %>
+                                <div class="venue-card">
+                                    <div class="venue-image">
+                                        <img src="<%= venue.images[0] %>" alt="<%= venue.name %>">
+                                    </div>
+                                    <div class="venue-info">
+                                        <h3><%= venue.name %></h3>
+                                        <p class="venue-location">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <%= venue.location %>
+                                        </p>
+                                        <p class="venue-price">From $<%= venue.price %>/day</p>
+                                        <a href="/venues/<%= venue._id %>" class="btn btn-primary">View Venue</a>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="no-favorites">You haven't added any venues to your favorites yet.</p>
+                        <% } %>
+                    </div>
+                </section>
+
+                <section id="settings" class="profile-section">
+                    <h2>Account Settings</h2>
+                    <form action="/user/settings" method="POST" class="settings-form">
+                        <div class="form-group">
+                            <h3>Change Password</h3>
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <h3>Notification Settings</h3>
+                            <div class="form-check">
+                                <input type="checkbox" id="emailNotifications" name="emailNotifications" class="form-check-input" <%= user.settings?.emailNotifications ? 'checked' : '' %>>
+                                <label for="emailNotifications" class="form-check-label">Email Notifications</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="smsNotifications" name="smsNotifications" class="form-check-input" <%= user.settings?.smsNotifications ? 'checked' : '' %>>
+                                <label for="smsNotifications" class="form-check-label">SMS Notifications</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div> 

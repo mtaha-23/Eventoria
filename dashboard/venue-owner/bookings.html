@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Bookings - Eventoria</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Eventoria</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../venues/index.html">Venues</a></li>
+                    <li><a href="../../services/index.html">Services</a></li>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User Avatar">
+                    <span>Sarah Johnson <i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="user-dropdown">
+                    <ul>
+                        <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                        <li><a href="venues.html"><i class="fas fa-building"></i> My Venues</a></li>
+                        <li><a href="bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="../../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-container">
+                <!-- Sidebar -->
+                <div class="dashboard-sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User Avatar">
+                        </div>
+                        <h3>Sarah Johnson</h3>
+                        <p>Venue Owner</p>
+                    </div>
+                    <nav class="sidebar-nav">
+                        <ul>
+                            <li>
+                                <a href="index.html">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="venues.html">
+                                    <i class="fas fa-building"></i>
+                                    <span>My Venues</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="add-venue.html">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span>Add New Venue</span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="bookings.html">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>Bookings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="analytics.html">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Analytics</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="reviews.html">
+                                    <i class="fas fa-star"></i>
+                                    <span>Reviews</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="settings.html">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../../index.html">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="dashboard-content">
+                    <div class="dashboard-header">
+                        <h2>Manage Bookings</h2>
+                        <p>View and manage all your venue bookings in one place.</p>
+                    </div>
+                    
+                    <!-- Booking Filters -->
+                    <div class="dashboard-section">
+                        <div class="booking-filters">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="filter-venue">Venue</label>
+                                    <select id="filter-venue">
+                                        <option value="">All Venues</option>
+                                        <option value="crystal-palace">Crystal Palace</option>
+                                        <option value="garden-oasis">Garden Oasis</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filter-status">Status</label>
+                                    <select id="filter-status">
+                                        <option value="">All Statuses</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="filter-date">Date Range</label>
+                                    <select id="filter-date">
+                                        <option value="upcoming">Upcoming</option>
+                                        <option value="past">Past</option>
+                                        <option value="this-month">This Month</option>
+                                        <option value="last-month">Last Month</option>
+                                        <option value="custom">Custom Range</option>
+                                    </select>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="btn btn-primary">Apply Filters</button>
+                                    <button class="btn btn-outline">Reset</button>
+                                </div>
+                            </div>
+                            <div class="custom-date-range" style="display: none;">
+                                <div class="filter-row">
+                                    <div class="filter-group">
+                                        <label for="date-from">From</label>
+                                        <input type="date" id="date-from">
+                                    </div>
+                                    <div class="filter-group">
+                                        <label for="date-to">To</label>
+                                        <input type="date" id="date-to">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bookings Table -->
+                    <div class="dashboard-section">
+                        <div class="bookings-table-container">
+                            <table class="bookings-table">
+                                <thead>
+                                    <tr>
+                                        <th>Booking ID</th>
+                                        <th>Client</th>
+                                        <th>Venue</th>
+                                        <th>Event Date</th>
+                                        <th>Time</th>
+                                        <th>Guests</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>BK-2023-001</td>
+                                        <td>
+                                            <div class="client-info">
+                                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client">
+                                                <div>
+                                                    <span class="client-name">Ahmad Khan</span>
+                                                    <span class="client-email">ahmad@example.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Crystal Palace</td>
+                                        <td>15 Jun 2023</td>
+                                        <td>7:00 PM - 11:00 PM</td>
+                                        <td>200</td>
+                                        <td>PKR 500,000</td>
+                                        <td><span class="status-badge confirmed">Confirmed</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="booking-details.html?id=BK-2023-001" class="action-btn view-btn" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="action-btn message-btn" title="Message Client">
+                                                    <i class="fas fa-comment"></i>
+                                                </button>
+                                                <div class="dropdown">
+                                                    <button class="action-btn more-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item">Edit Booking</a>
+                                                        <a href="#" class="dropdown-item">Send Invoice</a>
+                                                        <a href="#" class="dropdown-item text-danger">Cancel Booking</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK-2023-002</td>
+                                        <td>
+                                            <div class="client-info">
+                                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client">
+                                                <div>
+                                                    <span class="client-name">Zainab Khan</span>
+                                                    <span class="client-email">zainab@example.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Crystal Palace</td>
+                                        <td>22 Jun 2023</td>
+                                        <td>6:00 PM - 10:00 PM</td>
+                                        <td>100</td>
+                                        <td>PKR 300,000</td>
+                                        <td><span class="status-badge pending">Pending</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="booking-details.html?id=BK-2023-002" class="action-btn view-btn" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="action-btn message-btn" title="Message Client">
+                                                    <i class="fas fa-comment"></i>
+                                                </button>
+                                                <div class="dropdown">
+                                                    <button class="action-btn more-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item">Edit Booking</a>
+                                                        <a href="#" class="dropdown-item">Send Invoice</a>
+                                                        <a href="#" class="dropdown-item text-danger">Cancel Booking</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK-2023-003</td>
+                                        <td>
+                                            <div class="client-info">
+                                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Client">
+                                                <div>
+                                                    <span class="client-name">Usman Ali</span>
+                                                    <span class="client-email">usman@example.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Garden Oasis</td>
+                                        <td>25 Jun 2023</td>
+                                        <td>9:00 AM - 5:00 PM</td>
+                                        <td>80</td>
+                                        <td>PKR 250,000</td>
+                                        <td><span class="status-badge confirmed">Confirmed</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="booking-details.html?id=BK-2023-003" class="action-btn view-btn" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="action-btn message-btn" title="Message Client">
+                                                    <i class="fas fa-comment"></i>
+                                                </button>
+                                                <div class="dropdown">
+                                                    <button class="action-btn more-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item">Edit Booking</a>
+                                                        <a href="#" class="dropdown-item">Send Invoice</a>
+                                                        <a href="#" class="dropdown-item text-danger">Cancel Booking</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK-2023-004</td>
+                                        <td>
+                                            <div class="client-info">
+                                                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Client">
+                                                <div>
+                                                    <span class="client-name">Ayesha Malik</span>
+                                                    <span class="client-email">ayesha@example.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Crystal Palace</td>
+                                        <td>10 Jul 2023</td>
+                                        <td>7:00 PM - 11:00 PM</td>
+                                        <td>150</td>
+                                        <td>PKR 450,000</td>
+                                        <td><span class="status-badge pending">Pending</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="booking-details.html?id=BK-2023-004" class="action-btn view-btn" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="action-btn message-btn" title="Message Client">
+                                                    <i class="fas fa-comment"></i>
+                                                </button>
+                                                <div class="dropdown">
+                                                    <button class="action-btn more-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item">Edit Booking</a>
+                                                        <a href="#" class="dropdown-item">Send Invoice</a>
+                                                        <a href="#" class="dropdown-item text-danger">Cancel Booking</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK-2023-005</td>
+                                        <td>
+                                            <div class="client-info">
+                                                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client">
+                                                <div>
+                                                    <span class="client-name">Bilal Ahmed</span>
+                                                    <span class="client-email">bilal@example.com</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Garden Oasis</td>
+                                        <td>15 Jul 2023</td>
+                                        <td>6:00 PM - 10:00 PM</td>
+                                        <td>120</td>
+                                        <td>PKR 350,000</td>
+                                        <td><span class="status-badge cancelled">Cancelled</span></td>
+                                        <td>
+                                            <div class="table-actions">
+                                                <a href="booking-details.html?id=BK-2023-005" class="action-btn view-btn" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <button class="action-btn message-btn" title="Message Client">
+                                                    <i class="fas fa-comment"></i>
+                                                </button>
+                                                <div class="dropdown">
+                                                    <button class="action-btn more-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item">View Cancellation</a>
+                                                        <a href="#" class="dropdown-item">Restore Booking</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#" class="next">Next <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-column footer-brand">
+                        <div class="footer-logo">
+                            <h2>Eventoria</h2>
+                        </div>
+                        <p>Your one-stop solution for event planning and venue booking. We connect you with the perfect venues and services for your special occasions.</p>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../../venues/index.html">Venues</a></li>
+                            <li><a href="../../services/index.html">Services</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Event Types</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Weddings</a></li>
+                            <li><a href="#">Corporate Events</a></li>
+                            <li><a href="#">Birthday Parties</a></li>
+                            <li><a href="#">Conferences</a></li>
+                            <li><a href="#">Dinner Parties</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>loonay wala mor, Chiniot</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+92 (42) 128-128</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span><a href="mailto:info@eventoria.com">info@eventoria.com</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2023 Eventoria. All rights reserved.</p>
+                    <div class="footer-legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle user dropdown
+        document.querySelector('.user-avatar').addEventListener('click', function() {
+            document.querySelector('.user-dropdown').classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.querySelector('.user-dropdown');
+            
+            if (!userMenu.contains(event.target) && userDropdown.classList.contains('active')) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+
+        // Table dropdown toggle
+        const moreButtons = document.querySelectorAll('.more-btn');
+        
+        moreButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const dropdown = this.nextElementSibling;
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu !== dropdown) {
+                        menu.classList.remove('active');
+                    }
+                });
+                
+                dropdown.classList.toggle('active');
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.remove('active');
+            });
+        });
+
+        // Custom date range toggle
+        document.getElementById('filter-date').addEventListener('change', function() {
+            const customDateRange = document.querySelector('.custom-date-range');
+            
+            if (this.value === 'custom') {
+                customDateRange.style.display = 'block';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

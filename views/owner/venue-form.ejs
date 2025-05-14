@@ -1,0 +1,401 @@
+<%- include('../layouts/main', { title: venue ? 'Edit Venue' : 'Add New Venue' }) %>
+
+<div class="container">
+    <div class="page-header">
+        <h1><%= venue ? 'Edit Venue' : 'Add New Venue' %></h1>
+        <a href="/owner/venues" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Venues
+        </a>
+    </div>
+
+    <div class="card">
+        <form id="venueForm" class="venue-form" enctype="multipart/form-data">
+            <div class="form-grid">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h2>Basic Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Venue Name</label>
+                        <input type="text" id="name" name="name" class="form-control" 
+                               value="<%= venue ? venue.name : '' %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="description" class="form-control" rows="4" required><%= venue ? venue.description : '' %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" id="location" name="location" class="form-control" 
+                               value="<%= venue ? venue.location : '' %>" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="capacity" class="form-label">Capacity</label>
+                            <input type="number" id="capacity" name="capacity" class="form-control" 
+                                   value="<%= venue ? venue.capacity : '' %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price" class="form-label">Price per Day ($)</label>
+                            <input type="number" id="price" name="price" class="form-control" 
+                                   value="<%= venue ? venue.price : '' %>" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images -->
+                <div class="form-section">
+                    <h2>Venue Images</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Upload Images</label>
+                        <div class="image-upload">
+                            <input type="file" id="images" name="images" class="form-control" 
+                                   accept="image/*" multiple>
+                            <div class="upload-hint">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag and drop images here or click to browse</p>
+                                <p class="text-sm">Maximum 10 images, 5MB each</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="image-preview">
+                        <% if (venue && venue.images.length > 0) { %>
+                            <% venue.images.forEach(image => { %>
+                                <div class="preview-item">
+                                    <img src="<%= image %>" alt="Venue image">
+                                    <button type="button" class="remove-image" onclick="removeImage(this)">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            <% }); %>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Amenities -->
+                <div class="form-section">
+                    <h2>Amenities</h2>
+                    
+                    <div class="amenities-grid">
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="parking" 
+                                       <%= venue && venue.amenities.includes('parking') ? 'checked' : '' %>>
+                                <span>Parking</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="catering" 
+                                       <%= venue && venue.amenities.includes('catering') ? 'checked' : '' %>>
+                                <span>Catering</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="wifi" 
+                                       <%= venue && venue.amenities.includes('wifi') ? 'checked' : '' %>>
+                                <span>WiFi</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="audio" 
+                                       <%= venue && venue.amenities.includes('audio') ? 'checked' : '' %>>
+                                <span>Audio Equipment</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="projector" 
+                                       <%= venue && venue.amenities.includes('projector') ? 'checked' : '' %>>
+                                <span>Projector</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="furniture" 
+                                       <%= venue && venue.amenities.includes('furniture') ? 'checked' : '' %>>
+                                <span>Furniture</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability -->
+                <div class="form-section">
+                    <h2>Availability</h2>
+                    
+                    <div class="form-group">
+                        <label for="availability" class="form-label">Available Days</label>
+                        <div class="availability-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="monday" 
+                                       <%= venue && venue.availability.includes('monday') ? 'checked' : '' %>>
+                                <span>Monday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="tuesday" 
+                                       <%= venue && venue.availability.includes('tuesday') ? 'checked' : '' %>>
+                                <span>Tuesday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="wednesday" 
+                                       <%= venue && venue.availability.includes('wednesday') ? 'checked' : '' %>>
+                                <span>Wednesday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="thursday" 
+                                       <%= venue && venue.availability.includes('thursday') ? 'checked' : '' %>>
+                                <span>Thursday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="friday" 
+                                       <%= venue && venue.availability.includes('friday') ? 'checked' : '' %>>
+                                <span>Friday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="saturday" 
+                                       <%= venue && venue.availability.includes('saturday') ? 'checked' : '' %>>
+                                <span>Saturday</span>
+                            </label>
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="availability" value="sunday" 
+                                       <%= venue && venue.availability.includes('sunday') ? 'checked' : '' %>>
+                                <span>Sunday</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="openingTime" class="form-label">Opening Time</label>
+                            <input type="time" id="openingTime" name="openingTime" class="form-control" 
+                                   value="<%= venue ? venue.openingTime : '09:00' %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="closingTime" class="form-label">Closing Time</label>
+                            <input type="time" id="closingTime" name="closingTime" class="form-control" 
+                                   value="<%= venue ? venue.closingTime : '17:00' %>" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> <%= venue ? 'Update Venue' : 'Create Venue' %>
+                </button>
+                <a href="/owner/venues" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .image-upload {
+        border: 2px dashed var(--border-color);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    .image-upload:hover {
+        border-color: var(--primary-color);
+    }
+
+    .upload-hint {
+        color: var(--text-light);
+    }
+
+    .upload-hint i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .image-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .remove-image {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+    }
+
+    .remove-image:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .amenities-grid,
+    .availability-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+    // Image preview
+    document.getElementById('images').addEventListener('change', function(e) {
+        const files = e.target.files;
+        const preview = document.querySelector('.image-preview');
+        
+        for (let file of files) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'preview-item';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="remove-image" onclick="removeImage(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    preview.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    // Remove image
+    function removeImage(button) {
+        button.parentElement.remove();
+    }
+
+    // Form submission
+    document.getElementById('venueForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const url = '<%= venue ? `/owner/venues/${venue._id}` : "/owner/venues" %>';
+        const method = '<%= venue ? "PUT" : "POST" %>';
+
+        try {
+            const response = await fetch(url, {
+                method: method,
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                window.location.href = '/owner/venues';
+            } else {
+                alert(data.message || 'Error saving venue');
+            }
+        } catch (error) {
+            console.error('Error saving venue:', error);
+            alert('Error saving venue');
+        }
+    });
+</script> 

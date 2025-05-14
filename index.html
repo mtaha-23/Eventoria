@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventoria - Your Event Planning Solution</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
+    </head>
 <body>
     <!-- Auth Modals -->
     <div id="signin-modal" class="auth-modal">
@@ -20,14 +20,16 @@
                     <h2>Welcome Back</h2>
                     <p>Sign in to continue to your account</p>
                 </div>
-                <form class="auth-form">
+                <form id="signin-form" class="auth-form" novalidate>
                     <div class="form-group">
                         <label for="signin-email">Email Address</label>
                         <input type="email" id="signin-email" placeholder="Enter your email" required>
+                        <div id="signin-email-error" class="error-message">Please enter a valid email address</div>
                     </div>
                     <div class="form-group">
                         <label for="signin-password">Password</label>
                         <input type="password" id="signin-password" placeholder="Enter your password" required>
+                        <div id="signin-password-error" class="error-message">Password is required</div>
                     </div>
                     <div class="form-options">
                         <div class="remember-me">
@@ -70,26 +72,45 @@
                     <h2>Create Account</h2>
                     <p>Sign up to get started with Eventoria</p>
                 </div>
-                <form class="auth-form">
+                <form id="signup-form" class="auth-form" novalidate>
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
                         <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                        <div id="signup-name-error" class="error-message">Name must be at least 2 characters and cannot contain numbers</div>
                     </div>
                     <div class="form-group">
                         <label for="signup-email">Email Address</label>
                         <input type="email" id="signup-email" placeholder="Enter your email" required>
+                        <div id="signup-email-error" class="error-message">Please enter a valid email address</div>
                     </div>
                     <div class="form-group">
                         <label for="signup-password">Password</label>
                         <input type="password" id="signup-password" placeholder="Create a password" required>
+                        <div id="signup-password-error" class="error-message">Password doesn't meet requirements</div>
+                        <div class="password-requirements">
+                            <div class="requirement" id="length-requirement">
+                                <i class="fas fa-times-circle"></i> At least 8 characters
+                            </div>
+                            <div class="requirement" id="letter-requirement">
+                                <i class="fas fa-times-circle"></i> At least one letter
+                            </div>
+                            <div class="requirement" id="number-requirement">
+                                <i class="fas fa-times-circle"></i> At least one number
+                            </div>
+                            <div class="requirement" id="special-requirement">
+                                <i class="fas fa-times-circle"></i> At least one special character
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Confirm Password</label>
                         <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                        <div id="confirm-password-error" class="error-message">Passwords do not match</div>
                     </div>
                     <div class="form-check">
                         <input type="checkbox" id="terms" required>
                         <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        <div id="terms-error" class="error-message">You must agree to the terms</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
@@ -129,10 +150,11 @@
                     <i class="fas fa-check-circle"></i>
                     <p>Password reset link has been sent to your email address.</p>
                 </div>
-                <form id="reset-form" class="auth-form">
+                <form id="reset-form" class="auth-form" novalidate>
                     <div class="form-group">
                         <label for="reset-email">Email Address</label>
                         <input type="email" id="reset-email" placeholder="Enter your email" required>
+                        <div id="reset-email-error" class="error-message">Please enter a valid email address</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Reset Password</button>
                 </form>
@@ -545,7 +567,7 @@
                             </li>
                             <li>
                                 <i class="fas fa-envelope"></i>
-                                <span><a href="mailto:info@eventoria.com">info@eventoria.com</a></span>
+                                <span><a href="/cdn-cgi/l/email-protection#d8b1b6beb798bdaebdb6acb7aab1b9f6bbb7b5"><span class="__cf_email__" data-cfemail="e68f888089a6839083889289948f87c885898b">[email&#160;protected]</span></a></span>
                             </li>
                         </ul>
                     </div>
@@ -631,11 +653,290 @@
             }
         });
 
-        // Forgot password form submission
-        document.getElementById('reset-form').addEventListener('submit', function(e) {
+        // Form validation functions
+        function showError(input, message) {
+            const errorElement = document.getElementById(`${input.id}-error`);
+            input.classList.add('error');
+            errorElement.style.display = 'block';
+            errorElement.textContent = message;
+        }
+
+        function hideError(input) {
+            const errorElement = document.getElementById(`${input.id}-error`);
+            input.classList.remove('error');
+            errorElement.style.display = 'none';
+        }
+
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Sign In Form Validation
+        const signinForm = document.getElementById('signin-form');
+        const signinEmail = document.getElementById('signin-email');
+        const signinPassword = document.getElementById('signin-password');
+
+        signinForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            document.getElementById('success-message').style.display = 'block';
-            document.getElementById('reset-form').style.display = 'none';
+            let isValid = true;
+
+            // Validate email
+            if (!signinEmail.value.trim()) {
+                showError(signinEmail, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(signinEmail.value)) {
+                showError(signinEmail, 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                hideError(signinEmail);
+            }
+
+            // Validate password
+            if (!signinPassword.value.trim()) {
+                showError(signinPassword, 'Password is required');
+                isValid = false;
+            } else {
+                hideError(signinPassword);
+            }
+
+            if (isValid) {
+                // Form is valid, you can submit it
+                console.log('Sign In form is valid');
+                // signinForm.submit(); // Uncomment this to actually submit the form
+                alert('Sign In successful!'); // For demo purposes
+            }
+        });
+
+        // Real-time validation for sign in form
+        signinEmail.addEventListener('input', function() {
+            if (this.value.trim() && validateEmail(this.value)) {
+                hideError(this);
+            }
+        });
+
+        signinPassword.addEventListener('input', function() {
+            if (this.value.trim()) {
+                hideError(this);
+            }
+        });
+
+        // Sign Up Form Validation
+        const signupForm = document.getElementById('signup-form');
+        const signupName = document.getElementById('signup-name');
+        const signupEmail = document.getElementById('signup-email');
+        const signupPassword = document.getElementById('signup-password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const termsCheckbox = document.getElementById('terms');
+
+        // Password requirement elements
+        const lengthRequirement = document.getElementById('length-requirement');
+        const letterRequirement = document.getElementById('letter-requirement');
+        const numberRequirement = document.getElementById('number-requirement');
+        const specialRequirement = document.getElementById('special-requirement');
+
+        function updatePasswordRequirements(password) {
+            // Check length
+            if (password.length >= 8) {
+                lengthRequirement.classList.add('valid');
+                lengthRequirement.classList.remove('invalid');
+                lengthRequirement.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                lengthRequirement.classList.add('invalid');
+                lengthRequirement.classList.remove('valid');
+                lengthRequirement.querySelector('i').className = 'fas fa-times-circle';
+            }
+
+            // Check for letter
+            if (/[a-zA-Z]/.test(password)) {
+                letterRequirement.classList.add('valid');
+                letterRequirement.classList.remove('invalid');
+                letterRequirement.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                letterRequirement.classList.add('invalid');
+                letterRequirement.classList.remove('valid');
+                letterRequirement.querySelector('i').className = 'fas fa-times-circle';
+            }
+
+            // Check for number
+            if (/[0-9]/.test(password)) {
+                numberRequirement.classList.add('valid');
+                numberRequirement.classList.remove('invalid');
+                numberRequirement.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                numberRequirement.classList.add('invalid');
+                numberRequirement.classList.remove('valid');
+                numberRequirement.querySelector('i').className = 'fas fa-times-circle';
+            }
+
+            // Check for special character
+            if (/[^a-zA-Z0-9]/.test(password)) {
+                specialRequirement.classList.add('valid');
+                specialRequirement.classList.remove('invalid');
+                specialRequirement.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                specialRequirement.classList.add('invalid');
+                specialRequirement.classList.remove('valid');
+                specialRequirement.querySelector('i').className = 'fas fa-times-circle';
+            }
+        }
+
+        function validatePassword(password) {
+            const minLength = 8;
+            const hasLetter = /[a-zA-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^a-zA-Z0-9]/.test(password);
+            
+            return password.length >= minLength && hasLetter && hasNumber && hasSpecial;
+        }
+
+        // Function to check if name contains numbers
+        function containsNumbers(str) {
+            return /\d/.test(str);
+        }
+
+        signupPassword.addEventListener('input', function() {
+            updatePasswordRequirements(this.value);
+            
+            // Check if confirm password matches when password changes
+            if (confirmPassword.value) {
+                if (this.value !== confirmPassword.value) {
+                    showError(confirmPassword, 'Passwords do not match');
+                } else {
+                    hideError(confirmPassword);
+                }
+            }
+        });
+
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate name
+            if (!signupName.value.trim()) {
+                showError(signupName, 'Name is required');
+                isValid = false;
+            } else if (signupName.value.trim().length < 2) {
+                showError(signupName, 'Name must be at least 2 characters');
+                isValid = false;
+            } else if (containsNumbers(signupName.value)) {
+                showError(signupName, 'Name cannot contain numbers');
+                isValid = false;
+            } else {
+                hideError(signupName);
+            }
+
+            // Validate email
+            if (!signupEmail.value.trim()) {
+                showError(signupEmail, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(signupEmail.value)) {
+                showError(signupEmail, 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                hideError(signupEmail);
+            }
+
+            // Validate password
+            if (!signupPassword.value.trim()) {
+                showError(signupPassword, 'Password is required');
+                isValid = false;
+            } else if (!validatePassword(signupPassword.value)) {
+                showError(signupPassword, 'Password doesn\'t meet requirements');
+                isValid = false;
+            } else {
+                hideError(signupPassword);
+            }
+
+            // Validate confirm password
+            if (!confirmPassword.value.trim()) {
+                showError(confirmPassword, 'Please confirm your password');
+                isValid = false;
+            } else if (confirmPassword.value !== signupPassword.value) {
+                showError(confirmPassword, 'Passwords do not match');
+                isValid = false;
+            } else {
+                hideError(confirmPassword);
+            }
+
+            // Validate terms checkbox
+            if (!termsCheckbox.checked) {
+                document.getElementById('terms-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('terms-error').style.display = 'none';
+            }
+
+            if (isValid) {
+                // Form is valid, you can submit it
+                console.log('Sign Up form is valid');
+                // signupForm.submit(); // Uncomment this to actually submit the form
+                alert('Sign Up successful!'); // For demo purposes
+            }
+        });
+
+        // Real-time validation for sign up form
+        signupName.addEventListener('input', function() {
+            if (this.value.trim() && this.value.trim().length >= 2) {
+                if (containsNumbers(this.value)) {
+                    showError(this, 'Name cannot contain numbers');
+                } else {
+                    hideError(this);
+                }
+            }
+        });
+
+        signupEmail.addEventListener('input', function() {
+            if (this.value.trim() && validateEmail(this.value)) {
+                hideError(this);
+            }
+        });
+
+        confirmPassword.addEventListener('input', function() {
+            if (this.value === signupPassword.value) {
+                hideError(this);
+            } else {
+                showError(this, 'Passwords do not match');
+            }
+        });
+
+        termsCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('terms-error').style.display = 'none';
+            }
+        });
+
+        // Forgot Password Form Validation
+        const resetForm = document.getElementById('reset-form');
+        const resetEmail = document.getElementById('reset-email');
+
+        resetForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate email
+            if (!resetEmail.value.trim()) {
+                showError(resetEmail, 'Email is required');
+                isValid = false;
+            } else if (!validateEmail(resetEmail.value)) {
+                showError(resetEmail, 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                hideError(resetEmail);
+            }
+
+            if (isValid) {
+                // Show success message
+                document.getElementById('success-message').style.display = 'block';
+                resetForm.style.display = 'none';
+            }
+        });
+
+        // Real-time validation for reset form
+        resetEmail.addEventListener('input', function() {
+            if (this.value.trim() && validateEmail(this.value)) {
+                hideError(this);
+            }
         });
     </script>
 </body>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Eventoria</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Eventoria</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../venues/index.html">Venues</a></li>
+                    <li><a href="../services/index.html">Services</a></li>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar">
+                    <span>John Doe <i class="fas fa-chevron-down"></i></span>
+                </div>
+                <div class="user-dropdown">
+                    <ul>
+                        <li><a href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+                        <li><a href="bookings.html"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
+                        <li><a href="favorites.html"><i class="fas fa-heart"></i> Favorites</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-container">
+                <!-- Sidebar -->
+                <div class="dashboard-sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar">
+                        </div>
+                        <h3>John Doe</h3>
+                        <p>Customer</p>
+                    </div>
+                    <nav class="sidebar-nav">
+                        <ul>
+                            <li class="active">
+                                <a href="index.html">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="bookings.html">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span>My Bookings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="favorites.html">
+                                    <i class="fas fa-heart"></i>
+                                    <span>Favorites</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="profile.html">
+                                    <i class="fas fa-user"></i>
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-star"></i>
+                                    <span>Reviews</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../index.html">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="dashboard-content">
+                    <div class="dashboard-header">
+                        <h2>Dashboard</h2>
+                        <p>Welcome back, John! Here's an overview of your activities.</p>
+                    </div>
+                    
+                    <!-- Stats Cards -->
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>2</h3>
+                                <p>Upcoming Events</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>5</h3>
+                                <p>Past Events</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>8</h3>
+                                <p>Favorite Venues</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>4</h3>
+                                <p>Reviews Given</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upcoming Bookings -->
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h3>Upcoming Bookings</h3>
+                            <a href="bookings.html" class="btn-text">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="bookings-list">
+                            <div class="booking-card">
+                                <div class="booking-image">
+                                    <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Crystal Palace">
+                                </div>
+                                <div class="booking-details">
+                                    <h4>Wedding Reception</h4>
+                                    <p class="venue-name">Crystal Palace, Lahore</p>
+                                    <div class="booking-meta">
+                                        <span><i class="fas fa-calendar"></i> 15 June, 2023</span>
+                                        <span><i class="fas fa-clock"></i> 7:00 PM - 11:00 PM</span>
+                                        <span><i class="fas fa-user-friends"></i> 200 Guests</span>
+                                    </div>
+                                    <div class="booking-status confirmed">
+                                        <i class="fas fa-check-circle"></i> Confirmed
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <a href="#" class="btn btn-outline">View Details</a>
+                                    <a href="#" class="btn btn-text">Cancel</a>
+                                </div>
+                            </div>
+                            <div class="booking-card">
+                                <div class="booking-image">
+                                    <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Business Hub">
+                                </div>
+                                <div class="booking-details">
+                                    <h4>Corporate Meeting</h4>
+                                    <p class="venue-name">Business Hub, Islamabad</p>
+                                    <div class="booking-meta">
+                                        <span><i class="fas fa-calendar"></i> 22 June, 2023</span>
+                                        <span><i class="fas fa-clock"></i> 10:00 AM - 3:00 PM</span>
+                                        <span><i class="fas fa-user-friends"></i> 50 Guests</span>
+                                    </div>
+                                    <div class="booking-status pending">
+                                        <i class="fas fa-clock"></i> Pending
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <a href="#" class="btn btn-outline">View Details</a>
+                                    <a href="#" class="btn btn-text">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recommended Venues -->
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h3>Recommended Venues</h3>
+                            <a href="../venues/index.html" class="btn-text">View All <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="venues-grid">
+                            <div class="venue-card">
+                                <div class="venue-image">
+                                    <img src="https://imageswedding.theweddingcompany.com/bh_prod_bucket/watermark_assets/ideabook/111CFFB7-A504-49D0-85AE-817F02C03A07.jpeg" alt="Garden Oasis">
+                                    <div class="venue-badge">New</div>
+                                </div>
+                                <div class="venue-details">
+                                    <h3>Garden Oasis</h3>
+                                    <div class="venue-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> Lahore</span>
+                                        <span><i class="fas fa-user-friends"></i> Up to 150</span>
+                                    </div>
+                                    <div class="venue-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span>(42 reviews)</span>
+                                    </div>
+                                    <p>Beautiful garden venue perfect for outdoor celebrations and parties.</p>
+                                    <div class="venue-price">
+                                        <span>From PKR 450,000</span>
+                                    </div>
+                                    <a href="#" class="btn btn-secondary">View Details</a>
+                                </div>
+                            </div>
+                            <div class="venue-card">
+                                <div class="venue-image">
+                                    <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1498&q=80" alt="Luxury Wedding Hall">
+                                    <div class="venue-badge">Popular</div>
+                                </div>
+                                <div class="venue-details">
+                                    <h3>Royal Banquet</h3>
+                                    <div class="venue-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> Karachi</span>
+                                        <span><i class="fas fa-user-friends"></i> Up to 300</span>
+                                    </div>
+                                    <div class="venue-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(78 reviews)</span>
+                                    </div>
+                                    <p>Luxurious banquet hall with elegant decor and premium amenities.</p>
+                                    <div class="venue-price">
+                                        <span>From PKR 550,000</span>
+                                    </div>
+                                    <a href="#" class="btn btn-secondary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-column footer-brand">
+                        <div class="footer-logo">
+                            <h2>Eventoria</h2>
+                        </div>
+                        <p>Your one-stop solution for event planning and venue booking. We connect you with the perfect venues and services for your special occasions.</p>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../venues/index.html">Venues</a></li>
+                            <li><a href="../services/index.html">Services</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Event Types</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Weddings</a></li>
+                            <li><a href="#">Corporate Events</a></li>
+                            <li><a href="#">Birthday Parties</a></li>
+                            <li><a href="#">Conferences</a></li>
+                            <li><a href="#">Dinner Parties</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column footer-contact">
+                        <h3>Contact Us</h3>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>loonay wala mor, Chiniot</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+92 (42) 128-128</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span><a href="mailto:info@eventoria.com">info@eventoria.com</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2023 Eventoria. All rights reserved.</p>
+                    <div class="footer-legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle user dropdown
+        document.querySelector('.user-avatar').addEventListener('click', function() {
+            document.querySelector('.user-dropdown').classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.querySelector('.user-dropdown');
+            
+            if (!userMenu.contains(event.target) && userDropdown.classList.contains('active')) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
